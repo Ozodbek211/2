@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="uz"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ozodbek Ismonjonov — Creative Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#05060a;--fg:#eef1f7;--mut:#8b93a7;--acc:#4d7cff;--vio:#8a6cff;--line:rgba(255,255,255,.13);--f:"Space Grotesk",system-ui,sans-serif;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:radial-gradient(120% 80% at 80% 0,#101a3a 0,var(--bg) 60%);color:var(--fg);font:400 17px/1.6 var(--f);overflow-x:hidden}
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+main,header,footer{position:relative;z-index:1}
+body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.07;background:repeating-conic-gradient(#fff 0 25%,#000 0 50%) 0 0/3px 3px}
+a,button{color:inherit;font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.lbl{font-size:12px;letter-spacing:.3em;color:var(--acc);text-transform:uppercase}
+h1,h2{font-weight:700;line-height:.95;margin:.2em 0;letter-spacing:-.03em}
+h2{font-size:clamp(34px,6vw,84px)}
+section{min-height:100vh;padding:14vh 6vw;max-width:1400px;margin:auto}
+.btn{display:inline-block;border:1px solid var(--line);background:rgba(255,255,255,.03);padding:.9em 1.6em;border-radius:99px;text-decoration:none;letter-spacing:.12em;font-size:13px;text-transform:uppercase;transition:.3s}
+.btn:hover{border-color:var(--acc);background:rgba(77,124,255,.15)}
+/* header */
+header{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;gap:16px;padding:calc(18px + env(safe-area-inset-top,0px)) 5vw 18px;z-index:40;mix-blend-mode:normal}
+header .logo{font-weight:700;letter-spacing:.15em;font-size:13px;margin-right:auto}
+#cur{font-size:11px;letter-spacing:.25em;color:var(--mut);text-transform:uppercase}
+header button{background:none;border:1px solid var(--line);border-radius:99px;padding:.5em 1.1em;font-size:12px;letter-spacing:.15em}
+#vol{width:70px;accent-color:var(--acc)}
+#menu{position:fixed;inset:0;z-index:45;background:rgba(5,6,10,.96);display:flex;flex-direction:column;justify-content:center;padding:0 8vw;clip-path:circle(0 at 100% 0);transition:clip-path .9s cubic-bezier(.7,0,.2,1);visibility:hidden}
+#menu.o{clip-path:circle(150% at 100% 0);visibility:visible}
+#menu a{font-size:clamp(36px,9vw,110px);font-weight:700;text-decoration:none;line-height:1.1;color:var(--mut);transition:.3s;transform:translateY(30px);opacity:0}
+#menu.o a{transform:none;opacity:1;transition:color .3s,transform .7s,opacity .7s}
+#menu a:nth-child(2){transition-delay:.05s,.1s,.1s}#menu a:nth-child(3){transition-delay:.05s,.18s,.18s}#menu a:nth-child(4){transition-delay:.05s,.26s,.26s}#menu a:nth-child(5){transition-delay:.05s,.34s,.34s}
+#menu a:hover,#menu a.on{color:var(--fg);padding-left:.3em}
+/* intro */
+#intro{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;transition:opacity 1s,visibility 1s}
+#intro.out{opacity:0;visibility:hidden}
+#intro h1{font-size:clamp(30px,7vw,100px);letter-spacing:.06em;margin:0;background:linear-gradient(100deg,#fff 40%,#7fa0ff 50%,#fff 60%) 200% 0/250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 2.4s 3.2s both}
+@keyframes sweep{from{background-position:200% 0}to{background-position:-50% 0}}
+#intro .ch{display:inline-block;opacity:0;transform:translateY(40px) rotateX(-70deg);animation:ch .9s cubic-bezier(.2,.8,.2,1) both}
+@keyframes ch{to{opacity:1;transform:none}}
+#intro .sub{margin-top:18px;font-size:clamp(11px,1.6vw,16px);letter-spacing:.45em;color:var(--mut)}
+#intro .sub .ch{transform:none;animation-name:fade;animation-duration:.5s}
+@keyframes fade{to{opacity:1}}
+#enter{margin-top:48px;animation:fade 1s 4.2s both}
+#skip{position:absolute;right:5vw;top:calc(20px + env(safe-area-inset-top,0px));background:none;border:0;color:var(--mut);letter-spacing:.2em;font-size:12px}
+/* hero */
+#home{display:flex;flex-direction:column;justify-content:center;min-height:100vh}
+#home h1{font-size:clamp(48px,12vw,190px)}
+#home p{max-width:34ch;color:var(--mut)}
+.scroll{margin-top:40px;width:1px;height:70px;background:linear-gradient(var(--acc),transparent);animation:sc 2s infinite;transform-origin:top}
+@keyframes sc{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+/* reveal */
+.r{opacity:0;transform:translateY(40px);transition:opacity 1s,transform 1s cubic-bezier(.2,.8,.2,1)}
+.r.in{opacity:1;transform:none}
+/* about */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--line);margin-top:48px;border:1px solid var(--line)}
+.fact{background:var(--bg);padding:28px;transition:.4s}
+.fact:hover{background:#0d1530;transform:translateY(-4px)}
+.fact small{display:block;font-size:11px;letter-spacing:.3em;color:var(--acc)}
+.fact b{font-size:22px;font-weight:500}
+.fact:nth-child(odd){transform:translateX(-40px)}.fact:nth-child(even){transform:translateX(40px)}.fact:nth-child(3n){transform:translateY(50px)}
+.fact.r.in{transform:none}.fact.r.in:hover{transform:translateY(-4px)}
+/* tech */
+.chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:40px}
+.chip{background:rgba(255,255,255,.03);border:1px solid var(--line);padding:.8em 1.4em;border-radius:99px;transition:.35s}
+.chip:hover,.chip[aria-pressed=true]{border-color:var(--acc);background:rgba(77,124,255,.15);transform:translateY(-4px);box-shadow:0 10px 30px -10px var(--acc)}
+#tinfo{margin-top:28px;color:var(--mut);min-height:3em;max-width:60ch}
+.note{font-size:13px;color:var(--mut)}
+/* projects */
+.proj{display:grid;grid-template-columns:1fr 1fr;gap:5vw;align-items:center;margin:12vh 0}
+.proj:nth-child(even) .vis{order:2}
+.vis{aspect-ratio:16/10;border:1px solid var(--line);position:relative;overflow:hidden;transition:transform .6s}
+.proj:hover .vis{transform:perspective(900px) rotateY(-4deg) scale(1.02)}
+.v1{background:conic-gradient(from 0deg at 50% 50%,#0a1740,#4d7cff,#0a1740,#8a6cff,#0a1740);animation:spin 14s linear infinite}
+.v2{background:repeating-linear-gradient(90deg,#0b0f1e 0 18px,#142457 18px 20px),linear-gradient(#05060a,#1a1f4a)}
+.v2::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(127,160,255,.35),transparent);animation:slide 3.5s infinite}
+.v3{background:radial-gradient(circle at 30% 40%,#8a6cff 0,transparent 35%),radial-gradient(circle at 70% 60%,#4d7cff 0,transparent 40%),#05060a;animation:pulse 5s infinite alternate}
+@keyframes spin{to{filter:hue-rotate(40deg);transform:scale(1.1) rotate(8deg)}}
+@keyframes slide{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+@keyframes pulse{to{background-position:40px 20px;filter:brightness(1.3)}}
+.tag{display:inline-block;font-size:11px;letter-spacing:.2em;border:1px solid var(--line);padding:.3em .8em;margin:0 6px 6px 0;color:var(--mut)}
+.demo{color:var(--vio)}
+#ov{position:fixed;inset:0;z-index:55;background:#070a16;padding:10vh 8vw;clip-path:inset(100% 0 0 0);transition:clip-path .8s cubic-bezier(.7,0,.2,1);visibility:hidden;overflow:auto}
+#ov.o{clip-path:inset(0);visibility:visible}
+/* timeline */
+.tl{position:relative;margin:50px 0 0 14px;padding-left:36px}
+.tl::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(var(--acc),var(--vio));transform:scaleY(0);transform-origin:top;transition:transform 2s cubic-bezier(.6,0,.2,1)}
+.tl.in::before{transform:none}
+.tl div{margin-bottom:40px;position:relative}
+.tl div::before{content:"";position:absolute;left:-41px;top:.55em;width:9px;height:9px;border-radius:50%;background:var(--acc)}
+.tl h3{margin:0;font-weight:500;font-size:24px}
+.tl p{margin:.2em 0;color:var(--mut)}
+/* contact */
+#aloqa{display:flex;flex-direction:column;justify-content:center}
+.links{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
+.links .btn{min-width:200px}
+.ph{opacity:.55;border-style:dashed}
+footer{padding:60px 6vw calc(40px + env(safe-area-inset-bottom,0px));text-align:center;border-top:1px solid var(--line)}
+footer .sig{font-size:clamp(20px,4vw,48px);font-weight:300;letter-spacing:.3em;margin:20px 0}
+#ring{position:fixed;left:0;top:0;width:34px;height:34px;margin:-17px 0 0 -17px;border:1px solid rgba(127,160,255,.6);border-radius:50%;z-index:70;pointer-events:none;transition:width .25s,height .25s,margin .25s;display:none}
+#ring.h{width:64px;height:64px;margin:-32px 0 0 -32px}
+@media (hover:hover) and (pointer:fine){#ring{display:block}}
+@media (max-width:760px){.proj{grid-template-columns:1fr}.proj:nth-child(even) .vis{order:0}#vol,#cur{display:none}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01s!important;scroll-behavior:auto!important}.r,.fact{opacity:1!important;transform:none!important}#intro .ch{opacity:1;transform:none}#intro h1{color:#fff}}
+</style></head>
+<body>
+<canvas id="gl" aria-hidden="true"></canvas>
+<div id="ring"></div>
+
+<div id="intro" role="dialog" aria-label="Kirish">
+  <button id="skip">O‘TKAZIB YUBORISH →</button>
+  <h1 id="i1" aria-label="Ozodbek Ismonjonov">OZODBEK ISMONJONOV</h1>
+  <div class="sub" id="i2" aria-hidden="true">PROFESSIONAL PROGRAMMER</div>
+  <button class="btn" id="enter">Enter experience</button>
+</div>
+
+<header>
+  <span class="logo">OI</span><span id="cur">HOME</span>
+  <button id="snd" aria-pressed="false">SOUND OFF</button>
+  <input id="vol" type="range" min="0" max="1" step=".05" value=".5" aria-label="Ovoz balandligi">
+  <button id="mb" aria-expanded="false" aria-controls="menu">MENU</button>
+</header>
+<nav id="menu" aria-label="Asosiy menyu">
+  <a href="#home">Home</a><a href="#haqimda">Men haqimda</a><a href="#tech">Texnologiyalar</a><a href="#loyihalar">Loyihalar</a><a href="#aloqa">Aloqa</a>
+</nav>
+
+<main>
+<section id="home" data-n="Home">
+  <div class="lbl r">Creative developer</div>
+  <h1 class="r">OZODBEK<br>ISMONJONOV.</h1>
+  <p class="r" style="font-size:20px;color:var(--fg);max-width:40ch">Professional Programmer. Creative Thinker. Digital Builder.</p>
+  <p class="r">Men g‘oyalarni zamonaviy raqamli tajribalarga aylantiraman.</p>
+  <div class="r"><a class="btn" href="#loyihalar" data-mag>Loyihalar</a> <a class="btn" href="#aloqa" data-mag>Aloqa</a></div>
+  <div class="lbl r" style="margin-top:40px;color:var(--mut)">Exploring • Building • Evolving</div>
+  <div class="scroll" aria-hidden="true"></div>
+</section>
+
+<section id="haqimda" data-n="Men haqimda">
+  <div class="lbl r">About me</div>
+  <h2 class="r">Men haqimda.</h2>
+  <p class="r" style="max-width:60ch;font-size:20px">Men Ozodbek Ismonjonov — professional dasturchiman. Hozirda Namangan davlat universitetida 1-kursda tahsil olaman. Dasturlash, zamonaviy web texnologiyalar va kreativ raqamli loyihalar orqali o‘z g‘oyalarimni hayotga tatbiq etishga intilaman.</p>
+  <div class="facts" id="facts"></div>
+</section>
+
+<section id="tech" data-n="Texnologiyalar">
+  <div class="lbl r">Technologies</div>
+  <h2 class="r">Texnologiyalar bilan ishlash.</h2>
+  <div class="chips" id="chips"></div>
+  <p id="tinfo" aria-live="polite">Texnologiyani bosing — qisqacha tavsif chiqadi.</p>
+  <p class="note">Ro‘yxat tahrirlanadi: <code>CONFIG.techs</code> ichidan o‘rganmagan texnologiyalarni o‘chiring. Foizlar yoki darajalar ko‘rsatilmagan.</p>
+</section>
+
+<section id="loyihalar" data-n="Loyihalar">
+  <div class="lbl r">Selected works</div>
+  <h2 class="r">G‘oyalar. Tajribalar. Natijalar.</h2>
+  <p class="note">Mening loyihalarim.</p>
+  <div id="projs"></div>
+</section>
+
+<section id="rivoj" data-n="Rivojlanish">
+  <div class="lbl r">Growth</div>
+  <h2 class="r">Doimiy rivojlanish.</h2>
+  <div class="tl r" id="tl"></div>
+</section>
+
+<section id="aloqa" data-n="Aloqa">
+  <div class="lbl r">Let’s connect</div>
+  <h2 class="r">Birgalikda nimadir ajoyib yaratamiz.</h2>
+  <p class="r" style="max-width:50ch;color:var(--mut)">Yangi g‘oyalar, kreativ loyihalar va texnologiyalar haqida suhbatlashishga ochiqman.</p>
+  <div class="links r" id="links"></div>
+</section>
+</main>
+
+<footer>
+  <p class="lbl">Rahmat, ko‘rganingiz uchun.</p>
+  <div class="sig">OZODBEK ISMONJONOV</div>
+  <button class="btn" id="top">Yuqoriga ↑</button>
+</footer>
+
+<div id="ov" role="dialog" aria-modal="true" aria-labelledby="ot">
+  <div class="lbl demo" id="ol">NAMUNA LOYIHA</div>
+  <h2 id="ot"></h2><p id="od" style="max-width:55ch;color:var(--mut)"></p><div id="og"></div>
+  <p class="note" id="on">Bu demo yozuv — haqiqiy loyiha emas.</p><a class="btn" id="ou" target="_blank" rel="noopener" style="display:none;margin-right:10px">Ochish ↗</a>
+  <button class="btn" id="oc">← Portfoliyoga qaytish</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const CONFIG={
+  email:"ozodbekfrom1@gmail.com", github:"", telegram:"https://t.me/dangasaroq", channel:"https://t.me/kitobization", /* o‘zingizning manzillaringizni kiriting, masalan "https://github.com/..." */
+  techs:[["HTML","Veb sahifa tuzilmasi uchun asos."],["CSS","Sahifa ko‘rinishi va animatsiyalar."],["JavaScript","Veb interaktivlik tili."],["TypeScript","Turlar bilan xavfsizroq JavaScript."],["React","Komponentlarga asoslangan UI kutubxonasi."],["Next.js","React uchun full-stack freymvork."],["Three.js","Brauzerda 3D grafika kutubxonasi."],["GSAP","Murakkab animatsiya kutubxonasi."],["Git","Versiyalarni boshqarish tizimi."],["GitHub","Kodni saqlash va hamkorlik platformasi."]],
+  projects:[
+    ["Kitobization — Telegram kanal","Mening Telegram kanalim. Kanalni ochib, o‘zingiz ko‘rishingiz mumkin.",["Telegram"],"v3","real","https://t.me/kitobization"],
+    ["Shaxsiy portfolio sayti","Aynan siz ko‘rib turgan sayt: Three.js, HTML va CSS bilan yaratilgan kinematik portfolio.",["Three.js","HTML","CSS"],"v1","real",""]],
+  timeline:[["Hozirgi bosqich","Namangan davlat universiteti, 1-kurs."],["Kasbiy yo‘nalish","Dasturlash va zamonaviy web texnologiyalar."],["Doimiy yo‘nalish","O‘rganish, tajriba qilish va loyihalar yaratish."]],
+  facts:[["ISM","Ozodbek"],["FAMILIYA","Ismonjonov"],["TUG‘ILGAN YIL","2008"],["KASB","Professional dasturchi"],["TA’LIM","Namangan davlat universiteti"],["BOSQICH","1-kurs"]]
+};
+const $=s=>document.querySelector(s),RM=matchMedia("(prefers-reduced-motion:reduce)").matches;
+/* ---------- audio (synthesized, OFF by default) ---------- */
+const A={on:false,vol:.5,last:0,ctx:null,m:null,d:[]};
+A.t=(f,d=.08,ty="sine",v=.12,f2)=>{try{if(!A.on||!A.ctx)return;const n=performance.now();if(n-A.last<70)return;A.last=n;const c=A.ctx,o=c.createOscillator(),g=c.createGain(),t=c.currentTime;o.type=ty;o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(A.m);o.start();o.stop(t+d+.05)}catch(e){}};
+$("#snd").onclick=()=>{try{if(!A.ctx){const C=window.AudioContext||window.webkitAudioContext;A.ctx=new C();A.m=A.ctx.createGain();A.m.gain.value=A.vol*.5;A.m.connect(A.ctx.destination)}
+A.on=!A.on;if(A.on){A.ctx.resume();const g=A.ctx.createGain();g.gain.value=.05;g.connect(A.m);A.d=[55,82.4].map(f=>{const o=A.ctx.createOscillator();o.frequency.value=f;o.connect(g);o.start();return o});A.dg=g;A.t(440,.2,"triangle",.1,880)}else{A.d.forEach(o=>o.stop());A.d=[]}
+$("#snd").textContent="SOUND "+(A.on?"ON":"OFF");$("#snd").setAttribute("aria-pressed",A.on)}catch(e){$("#snd").textContent="SOUND N/A"}};
+$("#vol").oninput=e=>{A.vol=+e.target.value;if(A.m)A.m.gain.value=A.vol*.5};
+document.addEventListener("mouseover",e=>{const b=e.target.closest("a,button,.chip,.fact");$("#ring").classList.toggle("h",!!b);if(b&&!b.dataset.h){A.t(900,.05,"sine",.04)}});
+document.addEventListener("mouseout",e=>{});
+document.addEventListener("click",e=>{if(e.target.closest("a,button:not(#snd)"))A.t(320,.14,"triangle",.1,160)});
+/* ---------- content ---------- */
+const E=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
+CONFIG.facts.forEach(([k,v],i)=>{const f=E("div","fact r",`<small>${k}</small><b>${v}</b>`);f.style.transitionDelay=i*.09+"s";$("#facts").append(f)});
+CONFIG.techs.forEach(([n,d],i)=>{const b=E("button","chip r",n);b.style.transitionDelay=i*.06+"s";b.setAttribute("aria-pressed","false");b.onclick=()=>{document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");$("#tinfo").textContent=n+" — "+d};$("#chips").append(b)});
+const ov=$("#ov");let last=null;
+CONFIG.projects.forEach(([t,d,tg,v,k,u],i)=>{const real=k==="real";const p=E("article","proj r",`<div class="vis ${v}" role="img" aria-label="${t} animatsiyali ko‘rinishi"></div><div><div class="lbl demo">0${i+1} · ${real?"REAL":"NAMUNA"}</div><h2 style="font-size:clamp(28px,4vw,56px)">${t}</h2><p style="color:var(--mut)">${d}</p><div>${tg.map(x=>`<span class="tag">${x}</span>`).join("")}</div><button class="btn" style="margin-top:14px">Loyihani ko‘rish</button></div>`);
+p.querySelector("button").onclick=e=>{last=e.target;$("#ol").textContent=real?"REAL LOYIHA":"NAMUNA LOYIHA";$("#on").textContent=real?"":"Bu demo yozuv — haqiqiy loyiha emas.";$("#ou").style.display=u?"inline-block":"none";if(u)$("#ou").href=u;$("#ot").textContent=t;$("#od").textContent=d;$("#og").innerHTML=tg.map(x=>`<span class="tag">${x}</span>`).join("");ov.classList.add("o");A.t(180,.5,"sine",.1,520);$("#oc").focus()};$("#projs").append(p)});
+const cl=()=>{ov.classList.remove("o");if(last)last.focus()};$("#oc").onclick=cl;
+CONFIG.timeline.forEach(([h,p])=>$("#tl").append(E("div","",`<h3>${h}</h3><p>${p}</p>`)));
+[["Email",CONFIG.email,"mailto:"],["Telegram",CONFIG.telegram,""],["Telegram kanal",CONFIG.channel,""]].forEach(([n,v,pre])=>{
+  $("#links").append(v?E("a","btn",n)&&Object.assign(E("a","btn",n+" ↗"),{href:pre+v,target:"_blank",rel:"noopener"}):E("span","btn ph",n+" — hali kiritilmagan"))});
+/* ---------- nav ---------- */
+const menu=$("#menu"),mb=$("#mb");
+const tog=f=>{const o=f??!menu.classList.contains("o");menu.classList.toggle("o",o);mb.textContent=o?"CLOSE":"MENU";mb.setAttribute("aria-expanded",o);A.t(200,.4,"sine",.1,500)};
+mb.onclick=()=>tog();menu.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>tog(false)));
+addEventListener("keydown",e=>{if(e.key==="Escape"){if(ov.classList.contains("o"))cl();else tog(false)}});
+$("#top").onclick=()=>scrollTo({top:0,behavior:RM?"auto":"smooth"});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in")}}),{threshold:.15});
+document.querySelectorAll(".r").forEach(e=>io.observe(e));
+const secs=[...document.querySelectorAll("section")];
+new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){$("#cur").textContent=e.target.dataset.n;menu.querySelectorAll("a").forEach(a=>a.classList.toggle("on",a.hash==="#"+e.target.id))}}),{rootMargin:"-45% 0px -45% 0px"}).observe&&secs.forEach(s=>new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){$("#cur").textContent=s.dataset.n;menu.querySelectorAll("a").forEach(a=>a.classList.toggle("on",a.hash==="#"+s.id))}}),{rootMargin:"-45% 0px -45% 0px"}).observe(s));
+/* magnetic buttons + cursor */
+const ring=$("#ring");let mx=0,my=0;
+addEventListener("pointermove",e=>{mx=e.clientX/innerWidth*2-1;my=e.clientY/innerHeight*2-1;ring.style.transform=`translate(${e.clientX}px,${e.clientY}px)`;const b=e.target.closest("[data-mag]");document.querySelectorAll("[data-mag]").forEach(x=>x.style.transform="");if(b){const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.2}px,${(e.clientY-r.top-r.height/2)*.3}px)`}});
+/* ---------- intro text ---------- */
+const split=(el,d0,step)=>{const t=el.textContent;el.textContent="";[...t].forEach((c,i)=>{const s=E("span","ch",c===" "?"&nbsp;":c);s.style.animationDelay=(d0+i*step)+"s";el.append(s)})};
+split($("#i1"),1.4,.05);split($("#i2"),2.9,.03);
+/* ---------- 3D ---------- */
+const st={z:9,gx:0,t0:performance.now(),scale:.001};
+function initGL(){try{if(!window.THREE)throw 0;const T=THREE,c=$("#gl"),r=new T.WebGLRenderer({canvas:c,antialias:true,alpha:true});r.setPixelRatio(Math.min(devicePixelRatio,2));
+const s=new T.Scene(),cam=new T.PerspectiveCamera(50,1,.1,100),g=new T.Group();s.add(g);
+const mat=(col,o)=>new T.LineBasicMaterial({color:col,transparent:true,opacity:o});
+g.add(new T.LineSegments(new T.WireframeGeometry(new T.IcosahedronGeometry(1.7,1)),mat(0x4d7cff,.6)));
+const inner=new T.LineSegments(new T.WireframeGeometry(new T.OctahedronGeometry(.9,0)),mat(0xb9a6ff,.45));g.add(inner);
+const n=650,p=new Float32Array(n*3);for(let i=0;i<n*3;i++)p[i]=(Math.random()-.5)*(i%3===2?24:22);
+const geo=new T.BufferGeometry();geo.setAttribute("position",new T.BufferAttribute(p,3));
+const pts=new T.Points(geo,new T.PointsMaterial({size:.03,color:0x9fb6ff,transparent:true,opacity:.7}));s.add(pts);
+const rs=()=>{r.setSize(innerWidth,innerHeight,false);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();st.gx=innerWidth>900?2.2:0};rs();addEventListener("resize",rs);
+(function loop(){requestAnimationFrame(loop);const k=Math.min(1,(performance.now()-st.t0)/2200),e=1-Math.pow(1-k,3);
+const sc=Math.max(.001,e)*(innerWidth<700?.7:1);g.scale.setScalar(sc);
+cam.position.z+=(st.z-cam.position.z)*.04;g.position.x+=(st.gx*(st.home?1:0)-g.position.x)*.05;
+const sp=RM?0:1;g.rotation.y+=.0035*sp+(mx*.6-g.rotation.y%(Math.PI*2)*0)*0;g.rotation.x+=((my*.4+scrollY*.0008)-g.rotation.x)*.04;inner.rotation.y-=.008*sp;inner.rotation.x+=.004*sp;pts.rotation.y+=.0006*sp;
+cam.position.x+=(mx*.6-cam.position.x)*.04;cam.lookAt(0,0,0);r.render(s,cam)})();
+}catch(e){document.body.classList.add("nogl");$("#gl").style.display="none"}}
+initGL();
+/* ---------- intro control ---------- */
+st.z=6.5;
+function enter(fast){try{sessionStorage.setItem("intro","1")}catch(e){}
+A.t(260,.8,"sine",.14,900);const i=$("#intro");
+if(fast||RM){st.z=6;st.home=1;i.classList.add("out")}else{st.z=2.2;setTimeout(()=>{st.z=6;st.home=1},700);i.classList.add("out")}
+setTimeout(()=>{i.style.display="none"},1200)}
+$("#enter").onclick=()=>enter(false);$("#skip").onclick=()=>enter(true);
+let seen=false;try{seen=sessionStorage.getItem("intro")==="1"}catch(e){}
+if(seen||RM){$("#intro").style.display="none";st.z=6;st.home=1;st.t0-=3000}else $("#enter").focus({preventScroll:true});
+</script>
+</body></html>
